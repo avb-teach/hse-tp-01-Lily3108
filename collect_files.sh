@@ -48,10 +48,10 @@ copy(){
     fi
 }
 
-input_rep=$1
-input_rep="${input_rep#/}"
-output_rep=$2
-output_rep="${output_rep#/}"
+input_dir=$1
+input_dir="${input_dir#/}"
+output_dir=$2
+output_dir="${output_dir#/}"
 
 
 funct $input_dir $output_dir
