@@ -51,9 +51,8 @@ copy(){
 }
 
 input_dir=$1
-input_dir="${input_dir#/}"
 output_dir=$2
-output_dir="${output_dir#/}"
+
 
 
 funct $input_dir $output_dir
