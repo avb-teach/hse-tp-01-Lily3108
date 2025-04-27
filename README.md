@@ -10,7 +10,7 @@
 
 Скрипт должен быть в корне репозитория
 
-Пример xxx:
+Пример ччччс:
 
 `./collect_files.sh /home/input_dir /home/output_dir`
 
