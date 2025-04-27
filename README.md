@@ -60,6 +60,8 @@
 		- 2a.txt
 		- depth3
 			- 3.txt
+			- depth4
+				- 4.txt
 	- depth3
 		- depth4
 			- 4.txt
