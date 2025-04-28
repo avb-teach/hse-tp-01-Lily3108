@@ -25,8 +25,7 @@ copy(){
     start_dir=$5
 
     path="${file#*/}"
-    path1=${path#*Input_dir/}
-    echo $path $path1 $start_dir "aaa"
+    path1=${path#*$start_dir}
 
     ext="${path##*.}"
     base="${path%.*}"
@@ -42,7 +41,7 @@ copy(){
             (( count++ ))
             path1="${base}${count}${ext}"
         done
-
+        
         mkdir -p "$(dirname "$output_dir/$path1")"
         cp "$file" "$output_dir/$path1"
     else
@@ -83,4 +82,3 @@ done #именованные флаги https://unix.stackexchange.com/questions
 
 
 funct $input_dir $output_dir 0 $MAX_DEPTH "$(basename $input_dir)/"
-
