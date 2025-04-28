@@ -1,4 +1,4 @@
-
+#!/bin/bash
 funct(){
     input_dir=$1
     output_dir=$2
