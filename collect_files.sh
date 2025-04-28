@@ -1,4 +1,5 @@
 #!/bin/bash
+
 funct(){
     input_dir=$1
     output_dir=$2
@@ -24,7 +25,7 @@ copy(){
     start_dir=$5
 
     path="${file#*/}"
-    path1="${path#$start_dir}"
+    path1=${path#*Input_dir/}
     echo $path $path1 $start_dir "aaa"
 
     ext="${path##*.}"
@@ -82,3 +83,4 @@ done #именованные флаги https://unix.stackexchange.com/questions
 
 
 funct $input_dir $output_dir 0 $MAX_DEPTH "$(basename $input_dir)/"
+
