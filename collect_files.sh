@@ -81,8 +81,4 @@ while [[ $# -gt 0 ]]; do
 done #именованные флаги https://unix.stackexchange.com/questions/129391/passing-named-arguments-to-shell-scripts
 
 
-<<<<<<< HEAD
 funct $input_dir $output_dir 0 $MAX_DEPTH "$(basename $input_dir)/"
-=======
-funct $input_dir $output_dir 0 $MAX_DEPTH "$(basename $input_dir)/"
->>>>>>> 93c17ff2b6e266053813af6ed4a054669ac8f3b4
