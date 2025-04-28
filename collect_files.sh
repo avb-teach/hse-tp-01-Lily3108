@@ -1,18 +1,17 @@
-#!/bin/bash
 
 funct(){
-
     input_dir=$1
     output_dir=$2
     local -i cur_depth=$3
     max_depth=$4
+    start_dir=$5
     (( cur_depth++ ))
     for file in $input_dir/*; do
         if [ -f "$file" ]; then
-            copy $file $output_dir $cur_depth $max_depth
+            copy $file $output_dir $cur_depth $max_depth $start_dir
         fi
         if [ -d "$file" ]; then
-            funct $file $output_dir $cur_depth $max_depth
+            funct $file $output_dir $cur_depth $max_depth $start_dir
         fi
     done
 }
@@ -22,7 +21,12 @@ copy(){
     output_dir=$2
     local -i cur_depth=$3
     max_depth=$4
+    start_dir=$5
+
     path="${file#*/}"
+    path1="${path#$start_dir}"
+    echo $path $path1 $start_dir "aaa"
+
     ext="${path##*.}"
     base="${path%.*}"
     count=0
@@ -33,15 +37,16 @@ copy(){
     fi
 
     if (( $cur_depth<=$max_depth )); then
-        while [ -e "$output_dir/$path" ]; do
+        while [ -e "$output_dir/$path1" ]; do
             (( count++ ))
-            path="${base}${count}${ext}"
+            path1="${base}${count}${ext}"
         done
 
-        mkdir -p "$(dirname "$output_dir/$path")"
-        cp "$file" "$output_dir/$path"
+        mkdir -p "$(dirname "$output_dir/$path1")"
+        cp "$file" "$output_dir/$path1"
     else
-        new_path=$path
+        
+        new_path=$path1
         for (( i=0; i<(cur_depth-max_depth); i++ )); do
             new_path="${new_path#*/}"
         done
@@ -75,5 +80,5 @@ while [[ $# -gt 0 ]]; do
   esac
 done #именованные флаги https://unix.stackexchange.com/questions/129391/passing-named-arguments-to-shell-scripts
 
-funct $input_dir $output_dir 0 $MAX_DEPTH
 
+funct $input_dir $output_dir 0 $MAX_DEPTH "$(basename $input_dir)/"
