@@ -1,8 +1,10 @@
 #!/bin/bash
 
 funct(){
+
     input_dir=$1
     output_dir=$2
+    echo $input_dir
     local -i cur_depth=$3
     max_depth=$4
     (( cur_depth++ ))
@@ -75,3 +77,4 @@ while [[ $# -gt 0 ]]; do
 done #именованные флаги https://unix.stackexchange.com/questions/129391/passing-named-arguments-to-shell-scripts
 
 funct $input_dir $output_dir 0 $MAX_DEPTH
+
