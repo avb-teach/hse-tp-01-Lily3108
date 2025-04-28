@@ -6,6 +6,7 @@ funct() {
     local -i cur_depth="$3"
     local max_depth="$4"
     (( cur_depth++ ))
+    
     for file in "$input_dir"/*; do
         if [ -f "$file" ]; then
             copy "$file" "$output_dir" "$cur_depth" "$max_depth"
@@ -21,10 +22,14 @@ copy() {
     local output_dir="$2"
     local -i cur_depth="$3"
     local max_depth="$4"
-    local path="${file#*/}"
+    
+    local rel_path="${file#$input_dir/}"
+    local path="$rel_path"
+    
     local ext="${path##*.}"
     local base="${path%.*}"
     local count=0
+    
     if [ "$ext" == "$base" ]; then
         ext=""
     else
@@ -36,21 +41,18 @@ copy() {
             (( count++ ))
             path="${base}${count}${ext}"
         done
-
+        
         mkdir -p "$(dirname "$output_dir/$path")"
         cp "$file" "$output_dir/$path"
     else
-        local new_path="$path"
-        for (( i=0; i<(cur_depth-max_depth); i++ )); do
-            new_path="${new_path#*/}"
-        done
-        ext="${new_path##*.}"
-        base="${new_path%.*}"
+        IFS='/' read -ra parts <<< "$rel_path"
+        local new_path=$(IFS='/' ; echo "${parts[*]:max_depth}")
+        
         while [ -e "$output_dir/$new_path" ]; do
             (( count++ ))
-            new_path="${base}${count}${ext}"
+            new_path="${new_path%.*}${count}.${new_path##*.}"
         done
-        mkdir -p "$(dirname "$output_dir/$new_path")"
+        
         cp "$file" "$output_dir/$new_path"
     fi
 }
